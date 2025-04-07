@@ -1,12 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { sendUserDataToWebhook } from '../actions';
+import Banner from '@/components/ui/banner';
 
 export default function AddUserPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-
+  const [message, setMessage] = useState<string | null>(null);
+  const [showBanner, setShowBanner] = useState(false);
+  
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
@@ -14,14 +17,26 @@ export default function AddUserPage() {
 
       if(result){
         console.log('User data sent successfully!');
+        setMessage('User added successfully!');
+        setShowBanner(true)
       } else {
         console.error('Failed to send user data to WEBHOOK');
+        setMessage('Failed to add user.');
+        setShowBanner(true)
       }
-    
   };
+
+  useEffect(() => {
+    if (showBanner) {
+      setTimeout(() => { setShowBanner(false); setMessage(null); }, 3000);
+    }
+  }, [showBanner]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
+       {showBanner && message && (
+        <Banner message={message} />
+      )}
       <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <div className="mb-4">
           <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">
@@ -58,6 +73,7 @@ export default function AddUserPage() {
           </button>
         </div>
       </form>
+     
     </div>
   );
 }
