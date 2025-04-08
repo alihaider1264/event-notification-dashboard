@@ -7,7 +7,9 @@ import {
   PanelLeft,
   Settings,
   ShoppingCart,
-  Users2
+  Users,
+  Users2,
+  UserPlus
 } from 'lucide-react';
 
 import {
@@ -82,11 +84,11 @@ function DesktopNav() {
           <Package className="h-5 w-5" />
         </NavItem>
 
-        <NavItem href="/customers" label="Customers">
+        <NavItem href="/view-users" label="Members">
           <Users2 className="h-5 w-5" />
         </NavItem>
         <NavItem href="/add-user" label="Add User">
-          <LineChart className="h-5 w-5" />
+          <UserPlus className="h-5 w-5" />
         </NavItem>
         <NavItem href="#" label="Analytics">
           <LineChart className="h-5 w-5" />
